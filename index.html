@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>How to Use a Multimeter — Simple Guide</title>
+  <meta name="description" content="Learn how to use a multimeter: voltage, current, resistance, continuity, diode test, and troubleshooting electrical faults." />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#121a33;
+      --card2:#0f1730;
+      --text:#e9eefc;
+      --muted:#b7c3e6;
+      --accent:#7c5cff;
+      --accent2:#35d0ba;
+      --danger:#ff4d6d;
+      --ok:#34d399;
+      --border:rgba(255,255,255,.10);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 15%, rgba(124,92,255,.25), transparent 60%),
+        radial-gradient(900px 600px at 85% 30%, rgba(53,208,186,.18), transparent 60%),
+        linear-gradient(180deg, #070a14, var(--bg));
+      line-height:1.5;
+    }
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    header{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(11,16,32,.85), rgba(11,16,32,.55));
+      border-bottom:1px solid var(--border);
+    }
+    .topbar{
+      max-width:1100px;margin:0 auto;
+      padding:14px 24px;
+      display:flex;align-items:center;gap:14px;justify-content:space-between;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 8px 20px rgba(124,92,255,.35);
+      display:grid;place-items:center;
+      font-weight:800;color:#081026;
+    }
+    .brand h1{font-size:14px;margin:0;letter-spacing:.4px}
+    .brand small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+    nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    nav a{
+      text-decoration:none;
+      padding:8px 10px;border-radius:12px;
+      border:1px solid transparent;
+      color:var(--muted);
+      font-size:13px;
+    }
+    nav a:hover{border-color:var(--border);color:var(--text);background:rgba(255,255,255,.04)}
+    .hero{
+      padding:28px 0 10px;
+      display:grid;grid-template-columns:1.15fr .85fr;gap:22px;
+      align-items:stretch;
+    }
+    .heroCard{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    .hero h2{margin:0 0 10px;font-size:32px;line-height:1.15}
+    .hero p{margin:0;color:var(--muted);font-size:15px}
+    .pillRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .pill{
+      font-size:12px;color:var(--text);
+      border:1px solid var(--border);
+      padding:7px 10px;border-radius:999px;
+      background:rgba(255,255,255,.04);
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:18px;
+      margin-top:18px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(18,26,51,.9), rgba(15,23,48,.9));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    .card h3{margin:0 0 12px;font-size:18px}
+    .card p{margin:8px 0;color:var(--muted)}
+    .col-7{grid-column:span 7}
+    .col-5{grid-column:span 5}
+    .col-6{grid-column:span 6}
+    .col-12{grid-column:span 12}
+    .list{margin:10px 0 0;padding:0 0 0 18px;color:var(--muted)}
+    .list li{margin:7px 0}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12px;color:var(--text);
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+    }
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--accent2)}
+    .danger .dot{background:var(--danger)}
+    .ok .dot{background:var(--ok)}
+    .muted{color:var(--muted)}
+    .kbd{
+      font-family:var(--mono);
+      font-size:12px;
+      border:1px solid var(--border);
+      padding:2px 6px;border-radius:8px;
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+    }
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .controls{
+      display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 0;
+      align-items:center;
+    }
+    select,button,input{
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      padding:10px 12px;
+      font-size:14px;
+      outline:none;
+    }
+    select{min-width:220px}
+    button{
+      cursor:pointer;
+      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(53,208,186,.18));
+    }
+    button:hover{filter:brightness(1.1)}
+    .steps{
+      margin-top:14px;
+      padding:0;
+      list-style:none;
+      display:grid;gap:10px;
+    }
+    .step{
+      padding:12px 12px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+    }
+    .step b{color:var(--text)}
+    .step .hint{color:var(--muted);font-size:13px;margin-top:4px}
+    .twoCol{
+      display:grid;grid-template-columns:1fr 1fr;gap:14px;
+      align-items:start;
+    }
+    .note{
+      border-left:3px solid var(--accent);
+      padding:10px 12px;
+      background:rgba(124,92,255,.10);
+      border-radius:14px;
+      color:var(--muted);
+      margin-top:10px;
+    }
+    .warning{
+      border-left:3px solid var(--danger);
+      background:rgba(255,77,109,.10);
+    }
+    .mini{
+      font-size:12px;color:var(--muted)
+    }
+    .divider{
+      height:1px;background:var(--border);margin:14px 0;
+    }
+    footer{
+      margin:26px 0 10px;
+      color:var(--muted);
+      text-align:center;
+      font-size:12px;
+    }
+    /* SVG block styling */
+    .svgBox{
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      padding:10px;
+    }
+    .svgBox svg{width:100%;height:auto;display:block}
+    .tag{
+      font-size:12px;
+      padding:4px 8px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+    }
+    .faq details{
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px 12px;
+      background:rgba(255,255,255,.03);
+      margin:10px 0;
+    }
+    .faq summary{cursor:pointer;color:var(--text);font-weight:650}
+    .faq p{margin:10px 0 0;color:var(--muted)}
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .col-7,.col-5,.col-6,.col-12{grid-column:span 12}
+      nav{display:none}
+      .twoCol{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">M</div>
+      <div>
+        <h1>How to Use a Multimeter</h1>
+        <small>Voltage • Current • Resistance • Continuity • Troubleshooting</small>
+      </div>
+    </div>
+    <nav>
+      <a href="#safety">Safety</a>
+      <a href="#parts">Parts</a>
+      <a href="#interactive">Interactive Guide</a>
+      <a href="#faults">Troubleshoot Faults</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="heroCard">
+      <h2>Measure electricity safely — step by step.</h2>
+      <p>
+        A multimeter helps you <b>measure voltage (V)</b>, <b>current (A)</b>, <b>resistance (Ω)</b>,
+        and check <b>continuity</b> so you can diagnose faults quickly.
+      </p>
+      <div class="pillRow">
+        <span class="pill">Beginner-friendly</span>
+        <span class="pill">Works for analog & digital meters</span>
+        <span class="pill">AC & DC explained</span>
+        <span class="pill">Fault-finding checklist</span>
+      </div>
+      <div class="note warning" style="margin-top:16px">
+        <b style="color:var(--text)">Important:</b>
+        Never measure <b>resistance/continuity</b> on a live circuit. Turn power off first.
+      </div>
+    </div>
+
+    <div class="heroCard">
+      <div class="svgBox" aria-label="Simple multimeter diagram">
+        <!-- Simple multimeter SVG (not photo) -->
+        <svg viewBox="0 0 520 330" role="img">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0" stop-color="#7c5cff" stop-opacity="0.9"/>
+              <stop offset="1" stop-color="#35d0ba" stop-opacity="0.8"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="30" y="20" width="300" height="280" rx="30" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)" />
+          <rect x="60" y="50" width="240" height="75" rx="14" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)"/>
+          <text x="78" y="95" fill="rgba(233,238,252,.9)" font-size="24" font-family="ui-monospace, Menlo, monospace">0.00</text>
+          <text x="220" y="95" fill="rgba(183,195,230,.9)" font-size="16" font-family="ui-sans-serif, system-ui">V</text>
+
+          <circle cx="180" cy="195" r="62" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.16)"/>
+          <circle cx="180" cy="195" r="8" fill="url(#g1)"/>
+          <path d="M180 195 L230 175" stroke="url(#g1)" stroke-width="6" stroke-linecap="round"/>
+          <text x="115" y="270" fill="rgba(183,195,230,.9)" font-size="13" font-family="ui-sans-serif, system-ui">Dial / Selector</text>
+
+          <rect x="350" y="55" width="140" height="200" rx="22" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)"/>
+          <text x="370" y="95" fill="rgba(233,238,252,.92)" font-size="16" font-family="ui-sans-serif, system-ui">Ports</text>
+
+          <circle cx="380" cy="135" r="10" fill="#35d0ba" />
+          <text x="400" y="141" fill="rgba(183,195,230,.9)" font-size="13" font-family="ui-sans-serif, system-ui">COM (Black)</text>
+
+          <circle cx="380" cy="170" r="10" fill="#7c5cff" />
+          <text x="400" y="176" fill="rgba(183,195,230,.9)" font-size="13" font-family="ui-sans-serif, system-ui">VΩmA (Red)</text>
+
+          <circle cx="380" cy="205" r="10" fill="#ff4d6d" />
+          <text x="400" y="211" fill="rgba(183,195,230,.9)" font-size="13" font-family="ui-sans-serif, system-ui">10A (High A)</text>
+
+          <!-- Probes -->
+          <path d="M70 315 C140 300, 200 320, 260 305" stroke="#35d0ba" stroke-width="4" fill="none"/>
+          <path d="M120 315 C200 290, 270 320, 490 300" stroke="#7c5cff" stroke-width="4" fill="none"/>
+          <circle cx="65" cy="315" r="7" fill="#35d0ba"/>
+          <circle cx="115" cy="315" r="7" fill="#7c5cff"/>
+          <text x="30" y="325" fill="rgba(183,195,230,.85)" font-size="12" font-family="ui-sans-serif, system-ui">Probes</text>
+        </svg>
+      </div>
+      <p class="mini" style="margin-top:10px">
+        Black probe goes to <span class="kbd">COM</span>. Red probe goes to <span class="kbd">VΩmA</span> (or <span class="kbd">10A</span> for high current).
+      </p>
+    </div>
+  </section>
+
+  <section id="safety" class="grid">
+    <div class="card col-7">
+      <h3>Safety Rules (Read First)</h3>
+      <div class="row">
+        <span class="badge danger"><span class="dot"></span>High voltage can kill</span>
+        <span class="badge ok"><span class="dot"></span>Safe habits prevent accidents</span>
+      </div>
+      <ul class="list">
+        <li><b>Always start on a higher range</b> (if your meter is manual-range). Then reduce for accuracy.</li>
+        <li><b>Never measure Ω/continuity on a live circuit.</b> Switch off power and discharge capacitors first.</li>
+        <li><b>Hold probes by the insulated part only.</b> Keep fingers behind the safety guards.</li>
+        <li><b>Check leads and fuse</b> if readings look wrong or the meter shows “OL”.</li>
+        <li><b>Use the correct port</b> for current tests (mA/10A). Wrong port can blow the fuse.</li>
+      </ul>
+      <div class="note warning">
+        If you’re working on household mains (e.g., 220–240V), use a meter rated for it (look for CAT rating) and avoid wet hands/areas.
+      </div>
+    </div>
+
+    <div class="card col-5">
+      <h3>Quick Setup</h3>
+      <ol class="list" style="padding-left:18px">
+        <li>Plug <b>black</b> lead into <span class="kbd">COM</span>.</li>
+        <li>Plug <b>red</b> lead into <span class="kbd">VΩmA</span> (most tests).</li>
+        <li>Turn dial to your test mode: <b>V</b>, <b>A</b>, <b>Ω</b>, or <b>🔔</b> (continuity).</li>
+        <li>Touch probes to the test points and read the display.</li>
+      </ol>
+      <div class="divider"></div>
+      <p class="muted">
+        <b>DC (⎓)</b> is used for batteries and electronics. <b>AC (~)</b> is used for mains and many appliances.
+      </p>
+    </div>
+  </section>
+
+  <section id="parts" class="grid">
+    <div class="card col-6">
+      <h3>Key Features & Functions</h3>
+      <ul class="list">
+        <li><b>Dial/Selector:</b> Choose V, A, Ω, continuity, diode, etc.</li>
+        <li><b>Display:</b> Shows value and units (V, A, Ω).</li>
+        <li><b>Ports:</b> COM, VΩmA, 10A (high current).</li>
+        <li><b>Probes:</b> Conduct electricity to the meter for measurement.</li>
+        <li><b>Fuse Protection:</b> Protects the current-measurement circuit.</li>
+        <li><b>Hold/Backlight (some meters):</b> Freeze reading / see in darkness.</li>
+        <li><b>Auto-range vs Manual:</b> Auto picks range; manual needs you to set a range.</li>
+      </ul>
+    </div>
+
+    <div class="card col-6">
+      <h3>What Each Mode Means</h3>
+      <div class="twoCol">
+        <div>
+          <p><span class="tag">V⎓</span> DC Voltage (batteries, DC adapters)</p>
+          <p><span class="tag">V~</span> AC Voltage (mains, AC output)</p>
+          <p><span class="tag">Ω</span> Resistance (components, wires)</p>
+        </div>
+        <div>
+          <p><span class="tag">A / mA</span> Current (needs series connection)</p>
+          <p><span class="tag">🔔</span> Continuity (beeps if connected)</p>
+          <p><span class="tag">▶|</span> Diode test (forward drop)</p>
+        </div>
+      </div>
+      <div class="note">
+        <b>Rule of thumb:</b> Voltage is measured <b>in parallel</b>, current is measured <b>in series</b>.
+      </div>
+    </div>
+  </section>
+
+  <section id="interactive" class="grid">
+    <div class="card col-7">
+      <h3>Interactive: Choose What You Want to Measure</h3>
+      <p class="muted">Pick a mode and follow the exact steps. This reduces mistakes.</p>
+
+      <div class="controls">
+        <label for="mode" class="muted">Mode:</label>
+        <select id="mode" aria-label="Choose multimeter mode">
+          <option value="dcv">DC Voltage (V⎓) — Batteries & DC adapters</option>
+          <option value="acv">AC Voltage (V~) — Mains & AC sources</option>
+          <option value="res">Resistance (Ω) — Components & wires</option>
+          <option value="cont">Continuity (🔔) — Check if wire/path is unbroken</option>
+          <option value="diode">Diode Test (▶|) — Check diode direction</option>
+          <option value="dca">DC Current (A/mA) — Series measurement</option>
+        </select>
+        <button id="copyBtn" type="button">Copy Steps</button>
+      </div>
+
+      <ul id="steps" class="steps" aria-live="polite"></ul>
+
+      <div id="extraNote" class="note" style="display:none"></div>
+    </div>
+
+    <div class="card col-5">
+      <h3>Mini Diagrams</h3>
+      <p class="muted">Where to connect probes (parallel vs series).</p>
+
+      <div class="svgBox" style="margin-top:10px">
+        <svg viewBox="0 0 520 250" role="img" aria-label="Parallel vs series diagram">
+          <!-- Parallel (voltage) -->
+          <rect x="18" y="22" width="235" height="200" rx="18" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.14)"/>
+          <text x="34" y="48" fill="rgba(233,238,252,.92)" font-size="14" font-family="ui-sans-serif, system-ui">Voltage (Parallel)</text>
+
+          <line x1="45" y1="90" x2="210" y2="90" stroke="rgba(183,195,230,.6)" stroke-width="4"/>
+          <line x1="45" y1="160" x2="210" y2="160" stroke="rgba(183,195,230,.6)" stroke-width="4"/>
+          <rect x="112" y="105" width="32" height="40" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)"/>
+          <text x="120" y="130" fill="rgba(233,238,252,.9)" font-size="14" font-family="ui-monospace, Menlo, monospace">R</text>
+
+          <!-- meter -->
+          <rect x="70" y="60" width="56" height="40" rx="10" fill="rgba(124,92,255,.12)" stroke="rgba(124,92,255,.5)"/>
+          <text x="82" y="86" fill="rgba(233,238,252,.9)" font-size="14" font-family="ui-sans-serif, system-ui">V</text>
+
+          <line x1="98" y1="100" x2="98" y2="160" stroke="#7c5cff" stroke-width="3"/>
+          <line x1="98" y1="60" x2="98" y2="90" stroke="#35d0ba" stroke-width="3"/>
+
+          <circle cx="98" cy="90" r="6" fill="#35d0ba"/>
+          <circle cx="98" cy="160" r="6" fill="#7c5cff"/>
+
+          <!-- Series (current) -->
+          <rect x="270" y="22" width="232" height="200" rx="18" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.14)"/>
+          <text x="286" y="48" fill="rgba(233,238,252,.92)" font-size="14" font-family="ui-sans-serif, system-ui">Current (Series)</text>
+
+          <line x1="292" y1="125" x2="480" y2="125" stroke="rgba(183,195,230,.6)" stroke-width="4"/>
+
+          <!-- break and insert meter -->
+          <circle cx="340" cy="125" r="6" fill="rgba(183,195,230,.8)"/>
+          <circle cx="420" cy="125" r="6" fill="rgba(183,195,230,.8)"/>
+
+          <rect x="352" y="95" width="58" height="60" rx="12" fill="rgba(53,208,186,.10)" stroke="rgba(53,208,186,.55)"/>
+          <text x="374" y="130" fill="rgba(233,238,252,.9)" font-size="16" font-family="ui-sans-serif, system-ui">A</text>
+
+          <line x1="340" y1="125" x2="352" y2="125" stroke="#35d0ba" stroke-width="3"/>
+          <line x1="410" y1="125" x2="420" y2="125" stroke="#7c5cff" stroke-width="3"/>
+        </svg>
+      </div>
+
+      <div class="note" style="margin-top:12px">
+        <b>Remember:</b> For current, you must <b>open the circuit</b> and insert the meter in series.
+      </div>
+    </div>
+  </section>
+
+  <section id="faults" class="grid">
+    <div class="card col-12">
+      <h3>Troubleshoot Electrical Faults (Practical Checklist)</h3>
+      <div class="twoCol">
+        <div>
+          <p class="muted"><b>Problem:</b> Device not turning on</p>
+          <ul class="list">
+            <li><b>Step 1:</b> Measure supply voltage (DCV for batteries/adapters, ACV for mains).</li>
+            <li><b>Step 2:</b> Check fuse / plug / power cable using continuity mode.</li>
+            <li><b>Step 3:</b> Check switch continuity (ON should beep; OFF should not).</li>
+            <li><b>Step 4:</b> Check for broken wires, loose joints, or burnt connectors.</li>
+          </ul>
+
+          <div class="note">
+            If voltage is present but device is dead, the fault is likely <b>inside</b> (broken connection, switch, fuse, internal component).
+          </div>
+        </div>
+
+        <div>
+          <p class="muted"><b>Problem:</b> Short circuit / breaker trips</p>
+          <ul class="list">
+            <li><b>Power OFF.</b> Use resistance/continuity to test between live & neutral (or + and −).</li>
+            <li>If it beeps strongly / near 0Ω, you likely have a <b>short</b>.</li>
+            <li>Disconnect parts one by one to find where the short disappears.</li>
+            <li>Look for melted insulation, moisture, or burnt components.</li>
+          </ul>
+
+          <div class="note warning">
+            Shorts on mains are dangerous. If you’re unsure, use a qualified electrician for 220–240V circuits.
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="twoCol">
+        <div>
+          <p class="muted"><b>Problem:</b> Battery drains fast</p>
+          <ul class="list">
+            <li>Measure battery voltage (DCV). Compare to expected value (e.g., AA ~1.5V new, 9V battery ~9V).</li>
+            <li>Measure current draw by inserting meter in series (start on 10A port if unsure).</li>
+            <li>High current draw when “off” can mean a leakage path or faulty component.</li>
+          </ul>
+        </div>
+        <div>
+          <p class="muted"><b>Problem:</b> Wrong readings</p>
+          <ul class="list">
+            <li>Confirm the dial mode: DC vs AC matters.</li>
+            <li>Confirm red lead is in the correct port (VΩmA vs 10A).</li>
+            <li>Replace meter battery if display is dim or unstable.</li>
+            <li>Check current fuse inside the meter if current always reads 0.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="grid">
+    <div class="card col-12 faq">
+      <h3>FAQ (Common Mistakes)</h3>
+
+      <details>
+        <summary>Why does the meter show “OL” or “1”?</summary>
+        <p>
+          It usually means <b>Over Limit</b>: the value is too high for the selected range (manual-range meters),
+          or the circuit is <b>open</b> when measuring resistance/continuity.
+          Switch to a higher range or check your connections.
+        </p>
+      </details>
+
+      <details>
+        <summary>Can I test continuity on a live wire?</summary>
+        <p>
+          Don’t. Continuity mode injects a small test current. On a live circuit, it can damage the meter and is unsafe.
+          Turn power off first.
+        </p>
+      </details>
+
+      <details>
+        <summary>Why do I need “series” for current?</summary>
+        <p>
+          Current is the flow of charge through the circuit, so the meter must become part of the path.
+          If you place it in parallel like voltage, you can short the supply and blow the fuse.
+        </p>
+      </details>
+
+      <details>
+        <summary>Which port should I use for current?</summary>
+        <p>
+          Start with <b>10A</b> port if you don’t know the size of the current. If it’s small, move to <b>mA</b> for better accuracy.
+          Always move the red lead back to <b>VΩ</b> after current tests.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    Built as a simple guide page. You can customize text, add your school/company name, and print it as a handout.
+  </footer>
+</main>
+
+<script>
+  const modeEl = document.getElementById('mode');
+  const stepsEl = document.getElementById('steps');
+  const extraNoteEl = document.getElementById('extraNote');
+  const copyBtn = document.getElementById('copyBtn');
+
+  const guides = {
+    dcv: {
+      title: "DC Voltage (V⎓) — Batteries & DC adapters",
+      steps: [
+        ["Set probes", "Black → COM. Red → VΩmA."],
+        ["Set dial", "Turn dial to V⎓ (DC Voltage). If manual-range, start high then go lower."],
+        ["Connect in parallel", "Touch black probe to negative/ground, red probe to positive point."],
+        ["Read value", "A healthy AA is around 1.5V (new). A car battery is around 12–13V (engine off)."],
+        ["If sign is negative", "Swap probes or note that you reversed polarity (not usually harmful)."]
+      ],
+      note: "Tip: For unknown DC sources, start on the highest DCV range to protect the meter."
+    },
+    acv: {
+      title: "AC Voltage (V~) — Mains & AC sources",
+      steps: [
+        ["Set probes", "Black → COM. Red → VΩmA."],
+        ["Set dial", "Turn dial to V~ (AC Voltage). Start at the highest range if manual."],
+        ["Connect in parallel", "Touch probes across the two points (e.g., live and neutral)."],
+        ["Read value", "For many countries, mains is around 220–240V AC."],
+        ["Be extra careful", "Hold probes behind guards; avoid slipping. Use a properly rated meter (CAT rating)."]
+      ],
+      note: "High voltage is dangerous. If you’re not trained, avoid testing live mains."
+    },
+    res: {
+      title: "Resistance (Ω) — Components & wires",
+      steps: [
+        ["POWER OFF", "Turn off the circuit and discharge capacitors."],
+        ["Set probes", "Black → COM. Red → VΩmA."],
+        ["Set dial", "Turn dial to Ω (Resistance). Choose a suitable range if manual."],
+        ["Measure", "Touch probes across the component (ideally remove one leg from circuit for accuracy)."],
+        ["Interpret", "Near 0Ω = low resistance/short. Very high/OL = open circuit or too high for range."]
+      ],
+      note: "Never measure resistance on a live circuit."
+    },
+    cont: {
+      title: "Continuity (🔔) — Check if a wire/path is unbroken",
+      steps: [
+        ["POWER OFF", "Make sure the circuit is not live."],
+        ["Set probes", "Black → COM. Red → VΩmA."],
+        ["Set dial", "Turn dial to continuity (🔔)."],
+        ["Test", "Touch probes to the two ends of a wire/path."],
+        ["Result", "Beep/near 0Ω means connected. No beep/OL means broken path."]
+      ],
+      note: "Continuity is the fastest way to check fuses, switches, cables, and connectors."
+    },
+    diode: {
+      title: "Diode Test (▶|) — Check diode direction",
+      steps: [
+        ["POWER OFF", "Diode testing must be done with power off."],
+        ["Set probes", "Black → COM. Red → VΩmA."],
+        ["Set dial", "Turn dial to diode test (▶|)."],
+        ["Forward test", "Red to anode, black to cathode. Expect a number like 0.5–0.8 (silicon diode)."],
+        ["Reverse test", "Swap probes. You should get OL or a very high reading."]
+      ],
+      note: "If it reads low both directions, the diode may be shorted. If OL both ways, it may be open."
+    },
+    dca: {
+      title: "DC Current (A/mA) — Series measurement",
+      steps: [
+        ["Move red lead", "If unsure current size, put red lead in 10A port first (safer)."],
+        ["Set dial", "Turn dial to A⎓ or mA⎓ (DC Current). Start at highest range if manual."],
+        ["Open the circuit", "Disconnect the circuit at one point so current must pass through the meter."],
+        ["Connect in series", "Meter becomes the bridge: supply → meter → load → back to supply."],
+        ["Read & refine", "If current is small, move red lead to mA port for better precision (if safe)."]
+      ],
+      note: "Important: Never measure current by placing the meter across a voltage source like a battery (parallel)."
+    }
+  };
+
+  function render() {
+    const key = modeEl.value;
+    const g = guides[key];
+    stepsEl.innerHTML = "";
+    g.steps.forEach((s, i) => {
+      const li = document.createElement("li");
+      li.className = "step";
+      li.innerHTML = `<b>${i+1}. ${s[0]}</b><div class="hint">${s[1]}</div>`;
+      stepsEl.appendChild(li);
+    });
+    extraNoteEl.style.display = "block";
+    extraNoteEl.textContent = g.note;
+  }
+
+  async function copySteps() {
+    const key = modeEl.value;
+    const g = guides[key];
+    const text =
+      `How to use a multimeter — ${g.title}\n\n` +
+      g.steps.map((s, i) => `${i+1}) ${s[0]}: ${s[1]}`).join("\n") +
+      `\n\nNote: ${g.note}\n`;
+    try {
+      await navigator.clipboard.writeText(text);
+      copyBtn.textContent = "Copied ✓";
+      setTimeout(()=>copyBtn.textContent="Copy Steps", 1200);
+    } catch (e) {
+      alert("Copy failed. You can manually select the steps and copy.");
+    }
+  }
+
+  modeEl.addEventListener("change", render);
+  copyBtn.addEventListener("click", copySteps);
+  render();
+</script>
+</body>
+</html>
